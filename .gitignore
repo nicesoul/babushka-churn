@@ -3,6 +3,8 @@
 
 # Personal section of gitignore
 test/
+# in this case I don't want vscode settings.json
+.vscode/
 
 # Global section for VSCode, Virtual environment and Mac OS
 # https://github.com/github/gitignore/tree/master/Global
