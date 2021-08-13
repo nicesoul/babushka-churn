@@ -22,10 +22,12 @@ from sklearn.model_selection import train_test_split
 
 from sklearn.metrics import plot_confusion_matrix, precision_recall_fscore_support
 # from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, recall_score, roc_auc_score, precision_score
+# from explainerdashboard import ClassifierExplainer, ExplainerDashboard
+# from explainerdashboard.datasets import feature_descriptions
 
 # dataset from Kaggle, has no NaN or missing values
 # https://www.kaggle.com/sakshigoyal7/credit-card-customers
-data_raw = pd.read_csv('../data/BankChurners.csv')
+data_raw = pd.read_csv('data/BankChurners.csv')
 # Columns to be dropped (client id and Naive_Bayes_Classifiers)
 dataset = data_raw.copy()
 unused_columns = ['CLIENTNUM',
@@ -61,10 +63,10 @@ for feature in features_to_encode:
 ####
 
 # A stratified split preserves the ratio of 1 and 0 between the splits
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle= True, stratify = y)
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=555, test_size=0.2, shuffle= True, stratify = y) # 555 is lucky :)
 
 # I see some code repeating below, make it DRY, please
-rfc = RandomForestClassifier()
+rfc = RandomForestClassifier(random_state=555)
 rfc.fit(X_train, y_train)
 y_pred_rfc = rfc.predict(X_test)
 
@@ -72,6 +74,16 @@ print(f'rfc score is {round(rfc.score(X_test, y_test), 3)}')
 rfc_prfs = precision_recall_fscore_support(y_test, y_pred_rfc, average='binary')
 print(f'rfc stats are:\nPrecision: {round(rfc_prfs[0], 3)}\nRecall: {round(rfc_prfs[1], 3)}\nFscore: {round(rfc_prfs[2], 3)}')
 
+"""
+explainer = ClassifierExplainer(rfc, X_test, y_test, 
+                               
+                               descriptions=feature_descriptions,
+                               labels=['Existing Customer', 'Attrited Customer']) # cats=['Sex', 'Deck', 'Embarked'],
+# Warning: calculating shap interaction values can be slow! Pass shap_interaction=False to remove interactions tab.
+ExplainerDashboard(explainer, title="babushka churn prediction model dashboard", shap_interaction=False, simple=True).run() # simple=True, shap_interaction=False
+"""
+
+"""
 dtree = tree.DecisionTreeClassifier()
 dtree.fit(X_train, y_train)
 y_pred_dtree = dtree.predict(X_test)
@@ -88,6 +100,7 @@ disp1 = plot_confusion_matrix(dtree, X_test, y_test, display_labels=dtree.classe
 disp1.ax_.set_title('decision tree classifier')
 
 plt.show()
+"""
 
 # SVC is not running properly yet
 '''
