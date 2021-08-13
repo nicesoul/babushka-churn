@@ -2,6 +2,7 @@
 # import sys
 # import time
 # import pprint
+import joblib
 
 import numpy as np
 import pandas as pd
@@ -9,7 +10,7 @@ import matplotlib.pyplot as plt
 
 # import plotly.express as px
 # import seaborn as sns
-# import shap
+import shap
 
 import lightgbm as lgb
 
@@ -22,8 +23,8 @@ from sklearn.model_selection import train_test_split
 
 from sklearn.metrics import plot_confusion_matrix, precision_recall_fscore_support
 # from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, recall_score, roc_auc_score, precision_score
-# from explainerdashboard import ClassifierExplainer, ExplainerDashboard
-# from explainerdashboard.datasets import feature_descriptions
+from explainerdashboard import ClassifierExplainer, ExplainerDashboard
+from explainerdashboard.datasets import feature_descriptions
 
 # dataset from Kaggle, has no NaN or missing values
 # https://www.kaggle.com/sakshigoyal7/credit-card-customers
@@ -70,18 +71,23 @@ rfc = RandomForestClassifier(random_state=555)
 rfc.fit(X_train, y_train)
 y_pred_rfc = rfc.predict(X_test)
 
+#joblib.dump(rfc, 'models/rfc.joblib')
+
+# shap_values = shap.TreeExplainer(rfc).shap_values(X_train)
+# shap.summary_plot(shap_values, X_train, plot_type="bar")
+
 print(f'rfc score is {round(rfc.score(X_test, y_test), 3)}')
 rfc_prfs = precision_recall_fscore_support(y_test, y_pred_rfc, average='binary')
 print(f'rfc stats are:\nPrecision: {round(rfc_prfs[0], 3)}\nRecall: {round(rfc_prfs[1], 3)}\nFscore: {round(rfc_prfs[2], 3)}')
 
-"""
+
 explainer = ClassifierExplainer(rfc, X_test, y_test, 
                                
                                descriptions=feature_descriptions,
                                labels=['Existing Customer', 'Attrited Customer']) # cats=['Sex', 'Deck', 'Embarked'],
 # Warning: calculating shap interaction values can be slow! Pass shap_interaction=False to remove interactions tab.
 ExplainerDashboard(explainer, title="babushka churn prediction model dashboard", shap_interaction=False, simple=True).run() # simple=True, shap_interaction=False
-"""
+
 
 """
 dtree = tree.DecisionTreeClassifier()

@@ -4,6 +4,7 @@
 # some dashboard ideas here
 
 # Explainer dashboard takes forever to calculate shap values
+# Actually, by trying manually calculate SHAP I hang out the machine :)
 # checking streamlit again
 
 # from explainerdashboard import ClassifierExplainer, ExplainerDashboard
