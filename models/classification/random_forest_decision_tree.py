@@ -10,9 +10,9 @@ import matplotlib.pyplot as plt
 
 # import plotly.express as px
 # import seaborn as sns
-import shap
+# import shap
 
-import lightgbm as lgb
+# import lightgbm as lgb
 
 # from sklearn.preprocessing import LabelEncoder
 from sklearn.ensemble import RandomForestClassifier
@@ -86,7 +86,7 @@ explainer = ClassifierExplainer(rfc, X_test, y_test,
                                descriptions=feature_descriptions,
                                labels=['Existing Customer', 'Attrited Customer']) # cats=['Sex', 'Deck', 'Embarked'],
 # Warning: calculating shap interaction values can be slow! Pass shap_interaction=False to remove interactions tab.
-ExplainerDashboard(explainer, title="babushka churn prediction model dashboard", shap_interaction=False, simple=True).run() # simple=True, shap_interaction=False
+ExplainerDashboard(explainer, title="babushka churn prediction model dashboard", shap_interaction=False, simple=False).run() # simple=True, shap_interaction=False
 
 
 """

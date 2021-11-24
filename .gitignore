@@ -21,6 +21,8 @@ test/
 .history/
 
 # Virtualenv
+etc
+share
 .Python
 [Bb]in
 [Ii]nclude
