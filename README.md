@@ -38,9 +38,18 @@ Currently, this repo consists of 3 folders:
 - docker    = files needed to containerize my app and deploy it.
 - docs      = files related to a website with documentation.
 
+## Requirements
+Before running please be sure to install the required libraries.
+```Python
+pip install -r requirements.txt
+```
+Note that some libraries might require [Microsoft C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) preinstalled.
+
+Tested to work for Python 3.9.9 x64 (Windows 10)
+
 ## Contact
 
-In case of any question, please, refer to [documentation](https://nicesoul.github.io/babushka-churn/)
+In case of any question, please, refer to [documentation](https://nicesoul.github.io/babushka-churn/) (currently under development)
 
 Here is my contact [page](https://nicesoul.me/contact)
 
